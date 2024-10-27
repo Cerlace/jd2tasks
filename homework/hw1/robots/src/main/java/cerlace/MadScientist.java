@@ -1,11 +1,11 @@
-package homework.hw1.robots;
+package cerlace;
 
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
 public class MadScientist {
-    private Map<RobotPart, Integer> partsStorage = new HashMap<>();
+    private final Map<RobotPart, Integer> partsStorage = new HashMap<>();
 
     public void addPartToStorage(RobotPart part) {
         if (partsStorage.containsKey(part)) {

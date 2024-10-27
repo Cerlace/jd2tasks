@@ -1,5 +1,3 @@
-package homework.hw1.task70;
-
 import java.lang.reflect.*;
 
 public class Main {

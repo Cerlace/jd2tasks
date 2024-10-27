@@ -1,8 +1,6 @@
-package homework.hw1.task70;
-
 public class Man {
-    private String firstName;
-    private String lastName;
+    private final String firstName;
+    private final String lastName;
     private int age;
 
     public Man(String firstName, String lastName, int age) {

@@ -1,13 +1,16 @@
-package homework.hw1.robots;
+package cerlace;
 
-public class Fabric implements Runnable {
+public class Servant implements Runnable {
+
     private static final int RANDOM_COUNT_MIN = 1;
     private static final int RANDOM_COUNT_MAX = 4;
     private static final int NIGHTS_COUNT = 100;
     private static final int NIGHT_DURATION = 100;
+    private final MadScientist madScientist;
     private final Dump dump;
 
-    public Fabric(Dump dump) {
+    public Servant(MadScientist madScientist, Dump dump) {
+        this.madScientist = madScientist;
         this.dump = dump;
     }
 
@@ -16,7 +19,11 @@ public class Fabric implements Runnable {
         for (int i = 0; i < NIGHTS_COUNT; i++) {
             for (int j = 0; j < randomCount(); j++) {
                 synchronized (dump) {
-                    dump.addPart(RobotPart.getRandomPart());
+                    if (!dump.isEmpty()) {
+                        madScientist.addPartToStorage(dump.takeRandomPart());
+                    } else {
+                        break;
+                    }
                 }
             }
             try {

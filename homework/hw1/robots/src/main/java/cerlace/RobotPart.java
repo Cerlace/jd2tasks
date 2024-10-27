@@ -1,4 +1,4 @@
-package homework.hw1.robots;
+package cerlace;
 
 public enum RobotPart {
     HEAD,

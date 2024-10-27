@@ -1,5 +1,3 @@
-package homework.hw1.task72;
-
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
