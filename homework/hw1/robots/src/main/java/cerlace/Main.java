@@ -1,12 +1,13 @@
 package cerlace;
 
+import cerlace.managment.Dump;
+import cerlace.managment.MadScientist;
+import cerlace.threads.Fabric;
+import cerlace.threads.Servant;
+
 public class Main {
     public static void main(String[] args) {
         Dump dump = new Dump();
-
-        for (int i = 0; i < 20; i++) {
-            dump.addPart(RobotPart.getRandomPart());
-        }
 
         MadScientist firstScientist = new MadScientist();
         MadScientist secondScientist = new MadScientist();
