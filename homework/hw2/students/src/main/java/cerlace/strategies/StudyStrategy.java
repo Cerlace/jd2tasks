@@ -17,6 +17,7 @@ import java.util.Map;
  */
 public abstract class StudyStrategy {
     private final int studyTimeMultiplier;
+
     protected final List<LearnStage> learnStages = new ArrayList<>();
 
     /**
@@ -56,4 +57,12 @@ public abstract class StudyStrategy {
      * бы один объект {@code LearnStage}.
      */
     protected abstract void addLearnStages();
+
+    public List<LearnStage> getLearnStages() {
+        return learnStages;
+    }
+
+    public int getStudyTimeMultiplier() {
+        return studyTimeMultiplier;
+    }
 }
