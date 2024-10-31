@@ -1,10 +1,10 @@
 package cerlace.dto;
 
 /**
- * Класс {@code Skill} являтся классом, передающим информацию
+ * Класс {@code Skill} является классом, передающим информацию
  * об навыке для изучения. Содержит в себе поле {@link #title},
  * содержащие название навыка, и поле {@link #hoursToLearn},
- * содержащее колличество часов для освоения навыка.
+ * содержащее количество часов для освоения навыка.
  */
 public class Skill {
     private final String title;
@@ -14,7 +14,7 @@ public class Skill {
      * Конструктор создает объект навыка:
      *
      * @param title        название навыка;
-     * @param hoursToLearn колличество часов для освоения навыка.
+     * @param hoursToLearn количество часов для освоения навыка.
      */
     public Skill(String title, double hoursToLearn) {
         this.title = title;

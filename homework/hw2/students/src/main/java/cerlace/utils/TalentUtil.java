@@ -3,7 +3,7 @@ package cerlace.utils;
 import java.util.Random;
 
 /**
- * Класс {@code TalentUtil} являтся утилитарным классом, содержащим
+ * Класс {@code TalentUtil} является утилитарным классом, содержащим
  * методы для генерации значения таланта.
  */
 public class TalentUtil {

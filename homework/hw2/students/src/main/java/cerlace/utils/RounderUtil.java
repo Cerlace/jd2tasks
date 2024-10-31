@@ -1,7 +1,7 @@
 package cerlace.utils;
 
 /**
- * Класс {@code RounderUtil} являтся утилитарным классом, содержащим
+ * Класс {@code RounderUtil} является утилитарным классом, содержащим
  * методы для округления чисел с плавающей точкой.
  */
 public class RounderUtil {
@@ -11,10 +11,10 @@ public class RounderUtil {
 
     /**
      * Метод округляет число с плавающей точкой до указанного
-     * колличества знаков после запятой.
+     * количества знаков после запятой.
      *
      * @param number        число для округления;
-     * @param decimalPlaces колличество знаков после запятой;
+     * @param decimalPlaces количество знаков после запятой;
      * @return округленное число.
      */
     public static double round(double number, int decimalPlaces) {
