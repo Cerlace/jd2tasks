@@ -6,21 +6,15 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import java.util.ArrayList;
 import java.util.Map;
 
-class StudyStrategyOneTest extends StudyStrategyTest {
+class StrategyOneTest extends StudyStrategyTest {
 
     @BeforeEach
     void init() {
         studyStrategy = new StrategyTypeOne();
-        expectedStudyTimeMultiplier = 1;
-
-        expectedLearnStages = new ArrayList<>();
-        expectedLearnStages.add(LearnStage.ANALISE);
-        expectedLearnStages.add(LearnStage.PRACTICE);
-        expectedLearnStages.add(LearnStage.LECTURE);
     }
+
     @Test
     @Override
     void studyTest() {

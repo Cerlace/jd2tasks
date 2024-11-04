@@ -29,6 +29,5 @@ public class StrategyTypeTwo extends StudyStrategy {
     protected void addLearnStages() {
         learnStages.add(LearnStage.ANALISE);
         learnStages.add(LearnStage.PRACTICE);
-        ;
     }
 }
