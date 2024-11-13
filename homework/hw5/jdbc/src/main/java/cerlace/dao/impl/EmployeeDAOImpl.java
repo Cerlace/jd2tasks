@@ -7,6 +7,11 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Класс {@code EmployeeDAOImpl} реализует интерфейс {@code EmployeeDAO},
+ * содержит методы для доступа к данным таблицы,
+ * хранящей объекты {@code Employee}.
+ */
 public class EmployeeDAOImpl implements EmployeeDAO {
     private static final String CREATE_TABLE_QUERY =
             "CREATE TABLE IF NOT EXISTS employees (" +
@@ -49,6 +54,14 @@ public class EmployeeDAOImpl implements EmployeeDAO {
     private final String user;
     private final String password;
 
+    /**
+     * Конструктор объекта, устанавливает поля для доступа
+     * к обслуживаемой базе данных.
+     *
+     * @param url      путь к базе данных;
+     * @param user     логин для доступа к БД;
+     * @param password пароль для доступа к БД.
+     */
     public EmployeeDAOImpl(String url, String user, String password) {
         this.url = url;
         this.user = user;
@@ -158,6 +171,13 @@ public class EmployeeDAOImpl implements EmployeeDAO {
         }
     }
 
+    /**
+     * Метод для обеспечения работы методов множественного выбора.
+     *
+     * @param selectAllQuery SQL-запрос, выполняемый в методе;
+     * @return {@code List<Employee>} содержащий все записи таблицы,
+     * соответствующие условию.
+     */
     private List<Employee> selectAllSupplier(String selectAllQuery) {
         try (Connection connection = DriverManager.getConnection(this.url, this.user, this.password);
              PreparedStatement statement = connection.prepareStatement(selectAllQuery)) {
@@ -170,6 +190,14 @@ public class EmployeeDAOImpl implements EmployeeDAO {
         }
     }
 
+    /**
+     * Метод, устанавливающий в выражение {@code PreparedStatement} поля
+     * объекта {@code Employee}.
+     *
+     * @param statement обслуживаемое выражение;
+     * @param employee  объект, поля которого передаются в запрос;
+     * @throws SQLException при возникновении ошибке в запросе.
+     */
     private void setEmployeeParams(PreparedStatement statement, Employee employee) throws SQLException {
         statement.setString(1, employee.getFirstName());
         statement.setString(2, employee.getLastName());
@@ -179,6 +207,15 @@ public class EmployeeDAOImpl implements EmployeeDAO {
         statement.setDate(6, employee.getHireDate());
     }
 
+    /**
+     * Метод, собирающий записи из запроса множественного выбора
+     * в {@code List}.
+     *
+     * @param resultSet результат множественного выбора;
+     * @return {@code List<Employee>} содержащий все записи таблицы,
+     * соответствующие условию.
+     * @throws SQLException при возникновении ошибке в запросе.
+     */
     private List<Employee> getRecordsAsList(ResultSet resultSet) throws SQLException {
         List<Employee> list = new ArrayList<>();
 
@@ -195,6 +232,12 @@ public class EmployeeDAOImpl implements EmployeeDAO {
         return list;
     }
 
+    /**
+     * Метод выводит информацию о полученном {@code SQLException}
+     * в удобном виде в консоль.
+     *
+     * @param e объект полученного исключения.
+     */
     private void printSQLExceptionMessage(SQLException e) {
         System.out.println("Возникла ошибка при выполнении SQL запроса!\n" +
                 "Код ошибки: " + e.getSQLState() + "\n" +

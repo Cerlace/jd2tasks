@@ -2,6 +2,11 @@ package cerlace.dto;
 
 import java.sql.Date;
 
+/**
+ * Класс {@code Employee} является классом, передающим информацию
+ * о сотруднике (DTO). Содержит поля, эквивалентные колонкам в таблице,
+ * хранящей записи о сотрудниках.
+ */
 public class Employee {
     private final int id;
     private final String firstName;

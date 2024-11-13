@@ -1,7 +1,10 @@
 package cerlace.util;
 
 import java.util.ResourceBundle;
-
+/**
+ * Класс {@code JDBCResources} является утилитарным классом для
+ * получения данных, необходимых JDBC для доступа к базе данных.
+ */
 public class JDBCResources {
 
     private static final String DATABASE_RESOURCE = "database";
