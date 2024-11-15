@@ -16,7 +16,7 @@ public class AddressDAOImpl implements AddressDAO {
             "CREATE TABLE IF NOT EXISTS address (" +
                     " id INT AUTO_INCREMENT PRIMARY KEY," +
                     " street VARCHAR(50) NOT NULL," +
-                    " house INT NOT NULL;";
+                    " house INT NOT NULL);";
     private static final String INSERT_QUERY =
             "INSERT INTO address (street, house)" +
                     " VALUES (?, ?);";
@@ -95,12 +95,12 @@ public class AddressDAOImpl implements AddressDAO {
     @Override
     public boolean increaseHouseByOneForLastTwo() {
         return Boolean.TRUE.equals(SQLExecutor.executeSQL(INCREASE_HOUSE_QUERY,
-                statement ->  statement.executeUpdate() > 0));
+                statement -> statement.executeUpdate() > 0));
     }
 
     private static List<Address> getRecordsAsList(PreparedStatement statement) throws SQLException {
         List<Address> list = new ArrayList<>();
-        try (ResultSet resultSet = statement.getResultSet()) {
+        try (ResultSet resultSet = statement.executeQuery()) {
             while (resultSet.next()) {
                 list.add(new Address(
                         resultSet.getInt("id"),
@@ -112,7 +112,7 @@ public class AddressDAOImpl implements AddressDAO {
     }
 
     private static Address getRecordAsObject(PreparedStatement statement) throws SQLException {
-        try (ResultSet resultSet = statement.getResultSet()) {
+        try (ResultSet resultSet = statement.executeQuery()) {
             resultSet.next();
             return new Address(
                     resultSet.getInt("id"),

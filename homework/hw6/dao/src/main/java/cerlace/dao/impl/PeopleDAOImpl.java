@@ -103,7 +103,7 @@ public class PeopleDAOImpl implements PeopleDAO {
 
     private static List<People> getRecordsAsList(PreparedStatement statement) throws SQLException {
         List<People> list = new ArrayList<>();
-        try (ResultSet resultSet = statement.getResultSet()) {
+        try (ResultSet resultSet = statement.executeQuery()) {
             while (resultSet.next()) {
                 list.add(new People(
                         resultSet.getInt("id"),
@@ -116,7 +116,7 @@ public class PeopleDAOImpl implements PeopleDAO {
     }
 
     private static People getRecordAsObject(PreparedStatement statement) throws SQLException {
-        try (ResultSet resultSet = statement.getResultSet()) {
+        try (ResultSet resultSet = statement.executeQuery()) {
             resultSet.next();
             return new People(
                     resultSet.getInt("id"),
