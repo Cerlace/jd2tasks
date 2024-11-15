@@ -13,7 +13,7 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
-public class AbstractDAO<T> implements DAO<T> {
+public class UniversalDAO<T> implements DAO<T> {
 
     @Override
     public T save(T t) throws SQLException {
