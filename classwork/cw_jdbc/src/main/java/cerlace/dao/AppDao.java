@@ -1,7 +1,7 @@
 package cerlace.dao;
 
 import cerlace.dao.impl.CityDAOImpl;
-import cerlace.dto.City;
+import cerlace.dto.entity.City;
 
 import java.sql.SQLException;
 

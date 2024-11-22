@@ -3,7 +3,7 @@ package cerlace.dao.impl;
 import cerlace.JDBCResources;
 import cerlace.dao.CityDAO;
 import cerlace.dao.SqlExecutor;
-import cerlace.dto.City;
+import cerlace.dto.entity.City;
 
 import java.io.Serializable;
 import java.sql.*;
