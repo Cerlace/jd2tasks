@@ -2,7 +2,6 @@ package cerlace.hibernate;
 
 import cerlace.dto.entity.City;
 import org.hibernate.Session;
-import org.hibernate.Transaction;
 
 import javax.persistence.EntityManager;
 
@@ -11,15 +10,19 @@ public class App {
 
         EntityManager entityManager1 = HibernateUtil.getEntityManager();
 
+        EntityManager entityManager2 = HibernateUtil.getEntityManager();
+
         Session session = entityManager1.unwrap(Session.class);
-        Transaction transaction = session.beginTransaction();
+        Session session2 = entityManager2.unwrap(Session.class);
 
-        City myCity = session.get(City.class, 20);
-        City newCity = session.load(City.class, 20);
+        City myCity = session.get(City.class, 2);
+
         System.out.println(myCity);
-        System.out.println(newCity);
 
-        transaction.commit();
+        City myCity2 = session2.get(City.class, 2);
+
+        System.out.println(myCity2);
+
     }
 
     private static void persist(EntityManager entityManager, City city) {

@@ -17,7 +17,7 @@ import java.io.Serializable;
 public class City implements Serializable {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     @Column
     private Integer id;
 
