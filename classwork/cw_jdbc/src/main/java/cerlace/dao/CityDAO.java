@@ -1,6 +1,6 @@
 package cerlace.dao;
 
-import cerlace.dto.City;
+import cerlace.dto.entity.City;
 
 import java.sql.SQLException;
 import java.util.List;
