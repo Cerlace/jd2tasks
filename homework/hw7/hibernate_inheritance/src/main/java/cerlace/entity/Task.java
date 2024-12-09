@@ -13,6 +13,9 @@ import javax.persistence.*;
 @SuperBuilder
 @Entity
 @Table
+@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
+@DiscriminatorColumn(name = "task_type")
+@DiscriminatorValue("T")
 public class Task {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
