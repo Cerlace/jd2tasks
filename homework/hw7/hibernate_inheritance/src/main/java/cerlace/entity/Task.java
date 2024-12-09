@@ -13,6 +13,7 @@ import javax.persistence.*;
 @SuperBuilder
 @Entity
 @Table
+@Inheritance(strategy = InheritanceType.JOINED)
 public class Task {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

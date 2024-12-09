@@ -8,6 +8,7 @@ import lombok.experimental.SuperBuilder;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
 
 @Data
@@ -17,6 +18,7 @@ import javax.persistence.Table;
 @SuperBuilder
 @Entity
 @Table(name = "work_task")
+@PrimaryKeyJoinColumn(name = "TASK_ID")
 public class WorkTask extends Task {
     @Column
     private Double cost;
