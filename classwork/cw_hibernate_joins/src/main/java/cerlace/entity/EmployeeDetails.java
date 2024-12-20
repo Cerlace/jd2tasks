@@ -20,8 +20,7 @@ public class EmployeeDetails implements Serializable {
 
     @GenericGenerator(name = "one-one",
                     strategy = "foreign",
-                    parameters = @Parameter(name = "property",
-                    value = "employee"))
+                    parameters = @Parameter(name = "property", value = "employee"))
     @GeneratedValue(generator = "one-one")
     @Id
     @Column(name = "id_employee")
