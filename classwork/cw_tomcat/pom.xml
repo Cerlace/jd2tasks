@@ -7,7 +7,7 @@
     <version>1.0-SNAPSHOT</version>
     <name>cw_tomcat</name>
     <properties>
-        <project.build.sourseEncoding>UTF-8</project.build.sourseEncoding>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <maven.compiler.target>9</maven.compiler.target>
         <maven.compiler.source>9</maven.compiler.source>
     </properties>
@@ -45,6 +45,7 @@
                 <artifactId>maven-compiler-plugin</artifactId>
                 <version>3.6.1</version>
                 <configuration>
+                    <encoding>${project.build.sourceEncoding</encoding>
                     <source>${maven.compiler.source}</source>
                     <target>${maven.compiler.target}</target>
                 </configuration>

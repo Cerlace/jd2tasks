@@ -16,7 +16,6 @@
 <h2>Students</h2>
 <%= request.getAttribute("students")%>
 <table>
-
     <% List<StudentDTO> studentDTOs = (List<StudentDTO>) request.getAttribute("students");
         for (StudentDTO studentDTO : studentDTOs) {
     %>

@@ -10,7 +10,7 @@ public class StudentServiceImpl implements StudentService {
     private static final List<StudentEntity> studentRepository = List.of(
             StudentEntity.builder().id("1").name("Vasya").age("25")
                     .address("Minsk").mark("8").build(),
-            StudentEntity.builder().id("2").name("Vasya").age("22")
+            StudentEntity.builder().id("2").name("Vasya").age("25")
                     .address("Paris").mark("4").build(),
             StudentEntity.builder().id("3").name("Petya").age("21")
                     .address("Minsk").mark("5").build(),
