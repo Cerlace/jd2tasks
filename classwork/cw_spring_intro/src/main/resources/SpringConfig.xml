@@ -1,0 +1,83 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xmlns:p="http://www.springframework.org/schema/p"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+         http://www.springframework.org/schema/aop
+          http://www.springframework.org/schema/aop/spring-aop.xsd
+           http://www.springframework.org/schema/context
+            http://www.springframework.org/schema/context/spring-context-3.0.xsd"
+       default-destroy-method="destroy"
+       default-init-method="init">
+        <context:annotation-config/>
+        <context:component-scan base-package="cerlace.example"/>
+    <!--    <aop:aspectj-autoproxy/>-->
+    <bean id="addressHome"
+          class="cerlace.example.autowired.AddressHome"
+          p:id="1"
+          p:city="Minsk"
+          p:street="Kupali"
+          p:house="45">
+    </bean>
+    <bean id="address"
+          class="cerlace.example.autowired.Address"
+          p:id="1"
+          p:city="Minsk"
+          p:street="Brovki"
+          p:house="55"/>
+<!--    <bean id="personAutowired"-->
+<!--          class="cerlace.example.autowired.Person"-->
+<!--          scope="prototype"-->
+<!--          p:id="1"-->
+<!--          p:name="Petr"-->
+<!--          p:surname="Petrov"/>-->
+    <bean id="emailSender"
+          class="cerlace.example.EmailSender"
+          p:address="Minsk"/>
+    <bean id="serviceSender"
+          autowire="byType"
+          class="cerlace.example.SenderService"/>
+
+    <bean id="constructorBean"
+          class="cerlace.example.ConstructorBean">
+
+        <constructor-arg index="0" value="ConstructorBean"/>
+
+        <property name="stringList">
+            <list>
+                <value>5</value>
+                <value>6</value>
+                <value>7</value>
+            </list>
+        </property>
+        <property name="map">
+            <map>
+                <entry key="1" value="One"/>
+                <entry key="2" value="Two"/>
+                <entry key="3" value="Three"/>
+                <entry key="4" value="Four"/>
+                <entry key="5" value="Five"/>
+            </map>
+        </property>
+    </bean>
+    <bean id="person1" class="cerlace.example.Person"
+          p:name="Petr" scope="prototype"/>
+    <bean id="notifier" class="cerlace.example.aop.Notification"
+          p:name="#{emailSender.address}"/>
+    <bean id="timer" class="cerlace.example.aop.LogTimer"/>
+    <aop:config>
+        <aop:aspect id="time" ref="timer">
+            <aop:pointcut id="advice" expression="execution(* cerlace.example.SenderService.send(..))"/>
+            <aop:before method="notifyBefore" pointcut-ref="advice"/>
+            <aop:after method="notifyAfter" pointcut-ref="advice"/>
+        </aop:aspect>
+        <aop:aspect id="note" ref="notifier">
+            <aop:pointcut id="advice" expression="execution(* cerlace.example.SenderService.send(..))"/>
+            <aop:before method="notifyBefore" pointcut-ref="advice"/>
+            <aop:around method="notifyAround" pointcut-ref="advice"/>
+            <aop:after method="notifyAfter" pointcut-ref="advice"/>
+        </aop:aspect>
+    </aop:config>
+</beans>
