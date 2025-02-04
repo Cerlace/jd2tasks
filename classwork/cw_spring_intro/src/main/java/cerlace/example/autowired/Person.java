@@ -25,12 +25,12 @@ public class Person {
         this.name = name;
         this.surname = surname;
         this.address = address;
-        System.out.println("Constructor injection");
+//        System.out.println("Constructor injection");
     }
 
     public void setAddress(IAddress address) {
         this.address = address;
-        System.out.println("Setter injection");
+//        System.out.println("Setter injection");
     }
 
     public void introduce() {

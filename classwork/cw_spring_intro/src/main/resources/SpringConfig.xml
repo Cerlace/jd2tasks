@@ -13,7 +13,29 @@
        default-init-method="init">
         <context:annotation-config/>
         <context:component-scan base-package="cerlace.example"/>
-    <!--    <aop:aspectj-autoproxy/>-->
+        <aop:aspectj-autoproxy/>
+
+<!--    <bean id="gasEngine"-->
+<!--          class="cerlace.example.task.GasEngine"-->
+<!--          p:value="100 cubic cm"-->
+<!--          p:type="gas"-->
+<!--          autowire-candidate="true"/>-->
+
+<!--    <bean id="electricityEngine"-->
+<!--          class="cerlace.example.task.ElectricityEngine"-->
+<!--          p:value="500 mW"-->
+<!--          p:type="electricity"-->
+<!--          autowire-candidate="true"/>-->
+
+<!--    <bean id="car"-->
+<!--          class="cerlace.example.task.Car"-->
+<!--          p:vin="5N5424G32342J4343"-->
+<!--          p:name="Volkswagen"-->
+<!--          p:made="Germany"-->
+<!--          autowire="constructor">-->
+<!--        <qualifier value="electricityEngine" type="cerlace.example.task.ElectricityEngine"/>-->
+<!--    </bean>-->
+
     <bean id="addressHome"
           class="cerlace.example.autowired.AddressHome"
           p:id="1"
