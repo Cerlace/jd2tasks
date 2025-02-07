@@ -1,105 +1,164 @@
 <beans xmlns="http://www.springframework.org/schema/beans"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xmlns:aop="http://www.springframework.org/schema/aop"
+       xmlns:jpa="http://www.springframework.org/schema/data/jpa"
+       xmlns:tx="http://www.springframework.org/schema/tx"
        xmlns:p="http://www.springframework.org/schema/p"
        xmlns:context="http://www.springframework.org/schema/context"
        xsi:schemaLocation="http://www.springframework.org/schema/beans
         http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+        http://www.springframework.org/schema/data/jpa
+        http://www.springframework.org/schema/data/jpa/spring-jpa.xsd
+        http://www.springframework.org/schema/tx
+        http://www.springframework.org/schema/tx/spring-tx.xsd
          http://www.springframework.org/schema/aop
           http://www.springframework.org/schema/aop/spring-aop.xsd
            http://www.springframework.org/schema/context
             http://www.springframework.org/schema/context/spring-context-3.0.xsd"
        default-destroy-method="destroy"
        default-init-method="init">
-        <context:annotation-config/>
-        <context:component-scan base-package="cerlace.example"/>
-        <aop:aspectj-autoproxy/>
+    <context:annotation-config/>
+    <context:component-scan base-package="cerlace.example.hibernate"/>
+    <jpa:repositories base-package="cerlace.example.hibernate.repository"/>
+    <aop:aspectj-autoproxy/>
 
-<!--    <bean id="gasEngine"-->
-<!--          class="cerlace.example.task.GasEngine"-->
-<!--          p:value="100 cubic cm"-->
-<!--          p:type="gas"-->
-<!--          autowire-candidate="true"/>-->
-
-<!--    <bean id="electricityEngine"-->
-<!--          class="cerlace.example.task.ElectricityEngine"-->
-<!--          p:value="500 mW"-->
-<!--          p:type="electricity"-->
-<!--          autowire-candidate="true"/>-->
-
-<!--    <bean id="car"-->
-<!--          class="cerlace.example.task.Car"-->
-<!--          p:vin="5N5424G32342J4343"-->
-<!--          p:name="Volkswagen"-->
-<!--          p:made="Germany"-->
-<!--          autowire="constructor">-->
-<!--        <qualifier value="electricityEngine" type="cerlace.example.task.ElectricityEngine"/>-->
-<!--    </bean>-->
-
-    <bean id="addressHome"
-          class="cerlace.example.autowired.AddressHome"
-          p:id="1"
-          p:city="Minsk"
-          p:street="Kupali"
-          p:house="45">
+    <bean id="dataSource" class="org.apache.commons.dbcp2.BasicDataSource">
+        <property name="url"
+                  value="jdbc:mysql://localhost:3306/spring_hibernate_integration"/>
+        <property name="driverClassName" value="com.mysql.cj.jdbc.Driver"/>
+        <property name="username" value="root"/>
+        <property name="password" value="lspsds13"/>
+        <property name="initialSize" value="5"/>
+        <property name="maxTotal" value="20"/>
     </bean>
-    <bean id="address"
-          class="cerlace.example.autowired.Address"
-          p:id="1"
-          p:city="Minsk"
-          p:street="Brovki"
-          p:house="55"/>
-<!--    <bean id="personAutowired"-->
-<!--          class="cerlace.example.autowired.Person"-->
-<!--          scope="prototype"-->
-<!--          p:id="1"-->
-<!--          p:name="Petr"-->
-<!--          p:surname="Petrov"/>-->
-    <bean id="emailSender"
-          class="cerlace.example.EmailSender"
-          p:address="Minsk"/>
-    <bean id="serviceSender"
-          autowire="byType"
-          class="cerlace.example.SenderService"/>
 
-    <bean id="constructorBean"
-          class="cerlace.example.ConstructorBean">
-
-        <constructor-arg index="0" value="ConstructorBean"/>
-
-        <property name="stringList">
+    <bean id="entityManagerFactory"
+          class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
+        <property name="dataSource" ref="dataSource"/>
+        <property name="persistenceUnitName" value="jpa-unit"/>
+        <property name="jpaVendorAdapter">
+            <bean class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter"/>
+        </property>
+        <property name="packagesToScan">
             <list>
-                <value>5</value>
-                <value>6</value>
-                <value>7</value>
+                <value>cerlace.example.hibernate.entity</value>
             </list>
         </property>
-        <property name="map">
-            <map>
-                <entry key="1" value="One"/>
-                <entry key="2" value="Two"/>
-                <entry key="3" value="Three"/>
-                <entry key="4" value="Four"/>
-                <entry key="5" value="Five"/>
-            </map>
+        <property name="jpaProperties">
+            <props>
+                <prop key="hibernate.dialect">org.hibernate.dialect.MySQL55Dialect</prop>
+                <prop key="hibernate.show_sql">true</prop>
+                <prop key="hibernate.format_sql">false</prop>
+                <prop key="hibernate.hbm2ddl.auto">create</prop>
+            </props>
         </property>
     </bean>
-    <bean id="person1" class="cerlace.example.Person"
-          p:name="Petr" scope="prototype"/>
-    <bean id="notifier" class="cerlace.example.aop.Notification"
-          p:name="#{emailSender.address}"/>
-    <bean id="timer" class="cerlace.example.aop.LogTimer"/>
-    <aop:config>
-        <aop:aspect id="time" ref="timer">
-            <aop:pointcut id="advice" expression="execution(* cerlace.example.SenderService.send(..))"/>
-            <aop:before method="notifyBefore" pointcut-ref="advice"/>
-            <aop:after method="notifyAfter" pointcut-ref="advice"/>
-        </aop:aspect>
-        <aop:aspect id="note" ref="notifier">
-            <aop:pointcut id="advice" expression="execution(* cerlace.example.SenderService.send(..))"/>
-            <aop:before method="notifyBefore" pointcut-ref="advice"/>
-            <aop:around method="notifyAround" pointcut-ref="advice"/>
-            <aop:after method="notifyAfter" pointcut-ref="advice"/>
-        </aop:aspect>
-    </aop:config>
+
+    <bean id="transactionManager" class="org.springframework.orm.jpa.JpaTransactionManager">
+        <property name="entityManagerFactory" ref="entityManagerFactory"/>
+    </bean>
+    <!--    <bean id="transactionTemplate" class="org.springframework.transaction.support.TransactionTemplate">-->
+    <!--        <property name="transactionManager" ref="txManager"/>-->
+    <!--    </bean>-->
+
+    <tx:annotation-driven/>
+
+    <!--    <tx:advice id="txAdvice" transaction-manager="txManager">-->
+    <!--        <tx:attributes>-->
+    <!--            <tx:method name="*"/>-->
+    <!--            <tx:method name="get*" propagation="SUPPORTS" read-only="true"/>-->
+    <!--        </tx:attributes>-->
+    <!--    </tx:advice>-->
+    <!--    <aop:config>-->
+    <!--        <aop:advisor pointcut="execution(* cerlace.example.hibernate.service.IService.*(..))"-->
+    <!--                     advice-ref="txAdvice"/>-->
+    <!--    </aop:config>-->
+
+    <!--    <bean id="gasEngine"-->
+    <!--          class="cerlace.example.task.GasEngine"-->
+    <!--          p:value="100 cubic cm"-->
+    <!--          p:type="gas"-->
+    <!--          autowire-candidate="true"/>-->
+
+    <!--    <bean id="electricityEngine"-->
+    <!--          class="cerlace.example.task.ElectricityEngine"-->
+    <!--          p:value="500 mW"-->
+    <!--          p:type="electricity"-->
+    <!--          autowire-candidate="true"/>-->
+
+    <!--    <bean id="car"-->
+    <!--          class="cerlace.example.task.Car"-->
+    <!--          p:vin="5N5424G32342J4343"-->
+    <!--          p:name="Volkswagen"-->
+    <!--          p:made="Germany"-->
+    <!--          autowire="constructor">-->
+    <!--        <qualifier value="electricityEngine" type="cerlace.example.task.ElectricityEngine"/>-->
+    <!--    </bean>-->
+
+    <!--    <bean id="addressHome"-->
+    <!--          class="cerlace.example.autowired.AddressHome"-->
+    <!--          p:id="1"-->
+    <!--          p:city="Minsk"-->
+    <!--          p:street="Kupali"-->
+    <!--          p:house="45">-->
+    <!--    </bean>-->
+    <!--    <bean id="address"-->
+    <!--          class="cerlace.example.autowired.Address"-->
+    <!--          p:id="1"-->
+    <!--          p:city="Minsk"-->
+    <!--          p:street="Brovki"-->
+    <!--          p:house="55"/>-->
+    <!--    <bean id="personAutowired"-->
+    <!--          class="cerlace.example.autowired.Person"-->
+    <!--          scope="prototype"-->
+    <!--          p:id="1"-->
+    <!--          p:name="Petr"-->
+    <!--          p:surname="Petrov"/>-->
+    <!--    <bean id="emailSender"-->
+    <!--          class="cerlace.example.EmailSender"-->
+    <!--          p:address="Minsk"/>-->
+    <!--    <bean id="serviceSender"-->
+    <!--          autowire="byType"-->
+    <!--          class="cerlace.example.SenderService"/>-->
+
+    <!--    <bean id="constructorBean"-->
+    <!--          class="cerlace.example.ConstructorBean">-->
+
+    <!--        <constructor-arg index="0" value="ConstructorBean"/>-->
+
+    <!--        <property name="stringList">-->
+    <!--            <list>-->
+    <!--                <value>5</value>-->
+    <!--                <value>6</value>-->
+    <!--                <value>7</value>-->
+    <!--            </list>-->
+    <!--        </property>-->
+    <!--        <property name="map">-->
+    <!--            <map>-->
+    <!--                <entry key="1" value="One"/>-->
+    <!--                <entry key="2" value="Two"/>-->
+    <!--                <entry key="3" value="Three"/>-->
+    <!--                <entry key="4" value="Four"/>-->
+    <!--                <entry key="5" value="Five"/>-->
+    <!--            </map>-->
+    <!--        </property>-->
+    <!--    </bean>-->
+    <!--    <bean id="person1" class="cerlace.example.Person"-->
+    <!--          p:name="Petr" scope="prototype"/>-->
+    <!--    <bean id="notifier" class="cerlace.example.aop.Notification"-->
+    <!--          p:name="#{emailSender.address}"/>-->
+    <!--    <bean id="timer" class="cerlace.example.aop.LogTimer"/>-->
+    <!--    <aop:config>-->
+    <!--        <aop:aspect id="time" ref="timer">-->
+    <!--            <aop:pointcut id="advice" expression="execution(* cerlace.example.SenderService.send(..))"/>-->
+    <!--            <aop:before method="notifyBefore" pointcut-ref="advice"/>-->
+    <!--            <aop:after method="notifyAfter" pointcut-ref="advice"/>-->
+    <!--        </aop:aspect>-->
+    <!--        <aop:aspect id="note" ref="notifier">-->
+    <!--            <aop:pointcut id="advice" expression="execution(* cerlace.example.SenderService.send(..))"/>-->
+    <!--            <aop:before method="notifyBefore" pointcut-ref="advice"/>-->
+    <!--            <aop:around method="notifyAround" pointcut-ref="advice"/>-->
+    <!--            <aop:after method="notifyAfter" pointcut-ref="advice"/>-->
+    <!--        </aop:aspect>-->
+    <!--    </aop:config>-->
 </beans>
