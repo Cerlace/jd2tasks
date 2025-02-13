@@ -34,8 +34,8 @@ public class Reader {
     private String email;
     @Column(name = "registration_date")
     private LocalDate registrationDate;
-    @ManyToMany(cascade = CascadeType.ALL,
-            fetch = FetchType.LAZY)
+    @ManyToMany(cascade = CascadeType.MERGE,
+            fetch = FetchType.EAGER)
     @JoinTable(name = "reader_book",
             joinColumns = @JoinColumn(name = "reader_id"),
             inverseJoinColumns = @JoinColumn(name = "book_id")

@@ -22,8 +22,8 @@ public class JpaConfig {
 
         Properties jpaProperties = new Properties();
         jpaProperties.put("hibernate.dialect", "org.hibernate.dialect.MySQL55Dialect");
-        jpaProperties.put("hibernate.show_sql", true);
-        jpaProperties.put("hibernate.format_sql", true);
+        jpaProperties.put("hibernate.show_sql", false);
+        jpaProperties.put("hibernate.format_sql", false);
         jpaProperties.put("hibernate.hbm2ddl.auto", "create");
 
         em.setJpaProperties(jpaProperties);

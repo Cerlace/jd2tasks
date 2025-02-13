@@ -3,7 +3,11 @@ package cerlace.model;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -22,7 +26,10 @@ import java.util.Set;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-@Data
+@Getter
+@Setter
+@ToString(exclude = "readers")
+@EqualsAndHashCode(exclude = "readers")
 @Entity
 public class Book {
     @Id
@@ -34,7 +41,7 @@ public class Book {
     private String isbn;
     @Column(name = "published_date")
     private LocalDate publishedDate;
-    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @ManyToOne(cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
     @JoinColumn(name = "author_id")
     private Author author;
     @ManyToMany(mappedBy = "books")
