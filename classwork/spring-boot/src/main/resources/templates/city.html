@@ -1,0 +1,39 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<title>City</title>
+</head>
+<body>
+<table border="1">
+    <tr>
+        <th>ID</th>
+        <th>Name</th>
+        <th>Location</th>
+    </tr>
+    <tr th:each="city : ${cities}">
+        <td th:utext="${city.id}">...</td>
+        <td th:utext="${city.name}">...</td>
+        <td th:utext="${city.location}">...</td>
+    </tr>
+</table>
+<div>
+    <form th:action="@{/addCity}"
+          th:object="${addCity}" method="post">
+        <div th:if="${#fields.hasErrors('name')}">
+            <span th:errors="*{name}" class="error"></span>
+        </div>
+        <label>
+            Name:
+            <input type="text" th:field="*{name}"/>
+        </label>
+        <br/>
+        <label>
+            Location:
+            <input type="text" th:field="*{location}"/>
+        </label>
+        <br/>
+        <input type="submit" value="Добавить город"/>
+    </form>
+</div>
+</body>
+</html>
