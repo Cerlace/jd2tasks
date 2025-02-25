@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.29.xsd">
+
+    <changeSet id="1739464807801-1" author="Cerlace">
+        <sql>
+            create table if not exists city(
+                id serial primary key,
+                name VARCHAR(45) NOT NULL,
+                location VARCHAR(45) NOT NULL
+            );
+        </sql>
+    </changeSet>
+    <changeSet id="1740068652015-1" author="Cerlace" context="dev2">
+        <sql> create table if not exists users(
+                id serial primary key,
+                user_name VARCHAR(16) NOT NULL UNIQUE,
+                password VARCHAR(255) NOT NULL );
+        </sql>
+    </changeSet>
+    <changeSet author="userId1" id="tag_version_0_1_1">
+        <tagDatabase tag="2"/>
+    </changeSet>
+    <changeSet id="1740068705862-1" author="Cerlace" context="dev3">
+        <sql> INSERT INTO users (id, user_name, password)
+                VALUES ('1', 'admin', '$2y$12$kjBEvSNH8oN9508Vi8gpLOxzxsfc7H/HLRTQatlR4z3JOzrC4YXB6');
+              INSERT INTO users (id, user_name, password)
+                VALUES ('2', 'user', '$2y$12$kjBEvSNH8oN9508Vi8gpLOxzxsfc7H/HLRTQatlR4z3JOzrC4YXB6');
+        </sql>
+    </changeSet>
+    <changeSet id="1740068719010-1" author="Cerlace" context="dev3">
+        <sql> create table if not exists roles(
+                id serial primary key,
+                name VARCHAR(45) NOT NULL );
+        </sql>
+    </changeSet>
+    <changeSet id="1740068916331-1" author="Cerlace" context="dev4">
+        <sql> INSERT INTO roles (id, name)
+                VALUES( '1', 'USER');
+              INSERT INTO roles (id, name)
+                VALUES( '2', 'ADMIN');
+        </sql>
+        <rollback>drop table user_role;</rollback>
+    </changeSet>
+    <changeSet id="1740068920208-1" author="Cerlace">
+        <sql> create table if not exists user_role(
+                user_id bigint unsigned NOT NULL,
+                role_id bigint unsigned NOT NULL,
+                FOREIGN KEY (user_id) REFERENCES users (id),
+                FOREIGN KEY (role_id) REFERENCES roles (id) );
+        </sql>
+    </changeSet>
+    <changeSet id="1740068923723-1" author="Cerlace">
+        <sql> INSERT INTO user_role (user_id, role_id)
+                VALUES('1', '2');
+              INSERT INTO user_role (user_id, role_id)
+                VALUES('2', '1'); </sql>
+    </changeSet>
+</databaseChangeLog>
