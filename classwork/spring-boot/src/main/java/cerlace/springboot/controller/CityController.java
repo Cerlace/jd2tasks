@@ -16,14 +16,14 @@ import org.springframework.web.bind.annotation.PostMapping;
 @Controller
 public class CityController {
 
-    private final SimpleClient simpleClient;
+//    private final SimpleClient simpleClient;
 
     private final CityService cityService;
 
     @GetMapping("/getCity")
     public String getCities(Model model) {
-        model.addAttribute("cities", simpleClient.getCities());
-//      model.addAttribute("cities", cityService.getCities());
+//        model.addAttribute("cities", simpleClient.getCities());
+      model.addAttribute("cities", cityService.getCities());
         model.addAttribute("addCity", new CityDto());
         return "city";
     }
